@@ -1,0 +1,128 @@
+article{margin-left: 400px;}
+section{margin-bottom: 200px;}
+
+
+/* 타이틀 */
+.titleText{ 
+    text-align: center; 
+    margin-top: 60px; 
+    height: 55px; 
+    color: rgba(86, 67, 52, 1);
+    font-size: 27pt; 
+    font-weight: bold;
+    margin-left: 200px;
+}
+
+.mainImg{
+    margin-top: 80px;
+}
+.mainImg>p{
+    position: absolute;
+}
+.mainImg>img{margin-top:20px;}
+
+.mainText1{ 
+    font-size: 40px;
+    margin-top: 170px;
+    margin-left: 100px;
+    font-weight: bold;
+    color: #323232;
+}
+.mainText2{ 
+    font-size: 30px;
+    margin-top: 200px;
+    margin-left: 110px;
+    color: #323232;
+}
+.mainText3{ 
+    font-size: 18px;
+    margin-top: 270px;
+    margin-left: 110px;
+    font-weight: bold;
+    color: #323232;;
+}
+.mainText3>span{
+    color: white; 
+}
+
+#bottomCategory{margin: 0; margin-top: 100px;}
+.category{
+    position: relative;
+    margin-top: 100px;
+    display: inline-block;
+    width: 380px;
+    height: 170px;
+    margin-right: 10px;
+    margin-bottom: 120px;
+    vertical-align: top;
+}
+.category>span{
+    font-size: 23px;
+    font-weight: bold;
+}
+.category>a{
+    float: right;
+    padding-top: 15px;
+    color: rgba(167, 138, 108, 1); 
+}
+.numList1{
+    display: inline-block;
+    padding-left: 15px;
+}
+.numList2{
+    float: right;
+    padding-right: 15px;
+}
+
+
+#hr2{
+    border: 0;
+    height: 1px;
+    background-color: rgba(167, 138, 108, 1); 
+}
+.td-sub{
+    padding-left: 200px;
+    font-size: 15px;
+}
+.more{
+    color: rgba(167, 138, 108, 1);
+    font-size: 15px;
+}
+
+
+
+/* info nav */
+#hr{
+    width: 280px; 
+    height: 5px; 
+    background-color: rgba(167, 138, 108, 1); 
+    margin-bottom: 20px;
+    
+}
+
+.divNav{
+    width: 24%; 
+    display: inline-block; 
+    font-size: 23px;
+    margin-right: 5px;
+    position: absolute;
+    margin-top:40px;
+    
+}
+
+.divNav>ul{
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+    
+}
+
+.divNav>ul>li:first-child{
+    font-weight: bold; 
+    font-size: 25px;
+} 
+
+
+.divNav .subText{ margin-top: 20px;}
+.divNav .topText{ margin-bottom: 10px;}
+.divNav .mTopText{ margin-top: 55px;}

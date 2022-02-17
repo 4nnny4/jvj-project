@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mypageMapper">
+
+	<resultMap type="Coupon" id="coupon_rm">
+		<id property="couponNo" column="COUPON_NO"/>
+		<result property="couponName" column="COUPON_NM"/>
+		<result property="discountPer" column="DISCOUNT_PER"/>
+		<result property="provideDate" column="PROVIDE_DT"/>
+		<result property="expireDate" column="EXPIRE_DT"/>
+		<result property="couponStatusCode" column="COU_STATUS_CD"/>
+		<result property="couponStatusName" column="COU_STATUS_NM"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="service" column="MEMBER_SERVICE"/>
+	</resultMap>
+	
+	<resultMap type="CouponStatus" id="couponStatus_rm">
+		<id property="couponStatusCode" column="CATEGORY_CD"/>
+		<result property="couponStatusName" column="COU_STATUS_NM"/>
+	</resultMap>
+	
+	<resultMap type="Like" id="like_rm">
+		<id property="productNo" 				column="PRODUCT_NO"/>
+		
+		<result property="memberNo" 			column="MEMBER_NO"/>
+		<result property="service" 				column="MEMBER_SERVICE"/>
+		
+		<result property="productName" 			column="PRODUCT_NM"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<result property="productCode" 			column="PRODUCT_CD"/>
+				
+		<result property="productImageNo" 		column="PRODUCT_IMG_NO"/>
+		<result property="productImagePath" 	column="PRODUCT_IMG_PATH"/>
+		<result property="productImageName" 	column="PRODUCT_IMG_NAME"/>
+		<result property="productImageLevel"	column="PRODUCT_IMG_LEVEL"/>
+	</resultMap>
+	
+	
+	 <resultMap type="Member" id="member_rm">
+	 	<id property="memberNo" column="MEMBER_NO"/>
+	 	
+	 	<result property="memberEmail" 			column="MEMBER_EMAIL"/>
+	 	<result property="memberPw" 			column="MEMBER_PW"/>
+	 	<result property="memberNickname" 		column="MEMBER_NICKNAME"/>
+	 	<result property="memberName" 			column="MEMBER_NAME"/>
+	 	<result property="memberPhone" 			column="MEMBER_PHONE"/>
+	 	<result property="memberAddress" 		column="MEMBER_ADDR"/>
+	 	<result property="enrollDate" 			column="ENROLL_DT"/>
+	 	<result property="statusCode" 			column="STATUS_CD"/>
+	 	<result property="gradeCode" 			column="GRADE_CD"/>
+	 	<result property="service" 				column="MEMBER_SERVICE"/>
+	 	<result property="memberId" 			column="MEMBER_ID"/>
+	 	
+	 	<result property="edt" 					column="EDT" />
+	 </resultMap>
+
+
+	<resultMap type="Order" id="order_rm">
+		<id property="orderNo" column="ORDER_NO"/>
+		
+		<result property="purchaseNo" 			column="PURCHASE_NO" />
+		<result property="productNo" 			column="PRODUCT_NO" />
+		<result property="productAmount" 		column="PRODUCT_AMOUNT" />
+		<result property="discount" 			column="DISCOUNT" />
+		<result property="totalPrice" 			column="TOTAL_PRICE" />
+		<result property="memberNo" 			column="MEMBER_NO" />
+		<result property="enrollDate" 			column="ENROLL_DT" />
+		<result property="memberName" 			column="MEMBER_NAME" />
+		<result property="service" 				column="MEMBER_SERVICE" />
+		<result property="edt" 					column="EDT" />
+		
+		<result property="orderOptionNo" 		column="ORDER_OPTION_NO"/>
+		<result property="orderOption" 			column="ORDER_OPTION"/>
+		<result property="orderOptionAmount" 	column="ORDER_OPTION_AMOUNT"/>
+		
+		<result property="productName" 			column="PRODUCT_NM"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<result property="createDate" 			column="CREATE_DT"/>
+		<result property="productCode" 			column="PRODUCT_CD"/>
+		
+		<result property="classImgNo" 			column="PRODUCT_IMG_NO"/>
+		<result property="productImgPath" 		column="PRODUCT_IMG_PATH"/>
+		<result property="productImgName" 		column="PRODUCT_IMG_NAME"/>
+		<result property="productImgLevel" 		column="PRODUCT_IMG_LEVEL"/>
+		
+		<result property="paymentStatus" 		column="PAYMENT_STATUS"/>
+		<result property="paymentDate" 			column="PAYMENT_DT"/>
+		<result property="refunYN"				column="REFUND_YN"/>
+	</resultMap>
+	
+	
+
+	<!-- 전체 쿠폰 조회 -->
+	<select id="getCouponCount" resultType="_int">
+		SELECT COUNT(*) FROM COUPON WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 회원 쿠폰 리스트 조회 -->
+	<select id="selectCouponList" resultMap="coupon_rm">
+		SELECT COUPON_NO, COUPON_NM, (DISCOUNT_PER *100) DISCOUNT, 
+		PROVIDE_DT, EXPIRE_DT, CS.COU_STATUS_CD, CS.COU_STATUS_NM, M.MEMBER_NO, M.MEMBER_SERVICE
+		FROM COUPON C
+		JOIN COUPON_STATUS CS ON(CS.COU_STATUS_CD = C.COU_STATUS_CD)
+		JOIN MEMBER M ON (C.MEMBER_NO = M.MEMBER_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		ORDER BY COUPON_NO DESC
+	</select>
+	
+	<!-- 쿠폰 카테고리 조회 -->
+	<select id="statusCategory" resultMap="couponStatus_rm">
+		SELECT * FROM COUPON_STATUS
+	</select>
+	
+	
+	<!-- 전체 좋아요 조회 -->
+	<select id="getLikeCount" resultType="_int">
+		SELECT COUNT(*) FROM "LIKE" 
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 회원 목록 좋아요 조회 -->
+	<select id="getLikeList" resultMap="like_rm">
+		SELECT PRODUCT_NO, MEMBER_NO, MEMBER_SERVICE,
+		PRODUCT_NM, PRODUCT_PRICE, PRODUCT_CD, 
+		PRODUCT_IMG_NO, PRODUCT_IMG_PATH, PRODUCT_IMG_NAME, PRODUCT_IMG_LEVEL
+		FROM "LIKE"
+		LEFT JOIN MEMBER USING(MEMBER_NO)
+		LEFT JOIN PRODUCT USING(PRODUCT_NO)
+		LEFT JOIN PRODUCT_IMG USING(PRODUCT_NO)
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="cancleLike" parameterType="_int">
+		DELETE FROM "LIKE"
+		WHERE MEMBER_NO = #{memberNo}
+        AND PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<!-- 회원 번호 수정-->
+	<update id="memberUpdate" parameterType="Member">
+	
+		<choose>
+		
+			<when test="service == 'naver'">
+				UPDATE MEMBER SET 
+				MEMBER_PHONE = #{memberPhone}, 
+				MEMBER_ADDR = #{memberAddress} 
+				WHERE MEMBER_NO = #{memberNo}
+				AND MEMBER_SERVICE = #{service}
+			</when>
+			
+			<when test="service == 'kakao'">
+				UPDATE MEMBER SET 
+				MEMBER_NAME = #{memberName}, 
+				MEMBER_PHONE = #{memberPhone}, 
+				MEMBER_ADDR = #{memberAddress} 
+				WHERE MEMBER_NO = #{memberNo}
+				AND MEMBER_SERVICE = #{service}
+			</when>
+			
+			<otherwise>
+				UPDATE MEMBER SET 
+				MEMBER_NICKNAME = #{memberNickname}, 
+				MEMBER_PHONE = #{memberPhone}, 
+				MEMBER_ADDR = #{memberAddress} 
+				WHERE MEMBER_NO = #{memberNo}
+			</otherwise>
+				
+		</choose>
+	</update>
+	
+	
+	<!-- 암호화된 비밀번호 조회 -->
+	<select id="selectDecodePw" resultType="string">
+		SELECT MEMBER_PW 
+		FROM MEMBER 
+		WHERE MEMBER_NO = #{memberNo}
+		AND MEMBER_SERVICE IS NULL
+	</select>
+	
+	<update id="modifyPassword" parameterType="map">
+		UPDATE MEMBER SET 
+		MEMBER_PW = #{modifyPw}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="secession" parameterType="_int">
+		UPDATE MEMBER SET
+		STATUS_CD = 2
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	
+	<!-- 일반 상품 구매 목록 -->
+	<select id="purList" resultMap="order_rm">
+		SELECT ORD.ORDER_NO, ORD.PRODUCT_NO, PU.TOTAL_PRICE, PRODUCT_AMOUNT, ORD.MEMBER_NO, ORD.PURCHASE_NO, ORDER_OPTION, M.MEMBER_SERVICE,
+		PRODUCT_NM, PU.PRODUCT_CD, REFUND_YN, PAYMENT_DT, PU.PRODUCT_CD, PAYMENT_STATUS , PRODUCT_IMG_PATH, PRODUCT_IMG_NAME, PRODUCT_IMG_LEVEL
+		FROM "ORDER" ORD
+		JOIN MEMBER M ON(ORD.MEMBER_NO=M.MEMBER_NO )
+		JOIN ORDER_OPTION OO ON(OO.ORDER_NO = ORD.ORDER_NO)
+		JOIN PRODUCT PR ON(PR.PRODUCT_NO = ORD.PRODUCT_NO)
+		JOIN PURCHASE PU ON(PU.PURCHASE_NO = ORD.PURCHASE_NO)
+        JOIN PRODUCT_IMG PIMG ON(PIMG.PRODUCT_NO = ORD.PRODUCT_NO)
+		WHERE ORD.MEMBER_NO = #{memberNo}
+        AND PRODUCT_IMG_LEVEL = 0
+		AND PR.PRODUCT_CD = 1
+		AND PU.REFUND_YN = 'N'
+	</select>
+	
+	<!-- 클래스 상품 구매 목록 -->
+	<select id="classPurList" resultMap="order_rm">
+	SELECT ORD.ORDER_NO, ORD.PRODUCT_NO, PU.TOTAL_PRICE, PRODUCT_AMOUNT, ORD.MEMBER_NO, ORD.PURCHASE_NO, ORDER_OPTION, 
+		PRODUCT_NM, PU.PRODUCT_CD, REFUND_YN, PAYMENT_DT, PU.PRODUCT_CD, PAYMENT_STATUS, M.MEMBER_SERVICE
+		FROM "ORDER" ORD
+		JOIN MEMBER M ON(ORD.MEMBER_NO=M.MEMBER_NO )
+		JOIN ORDER_OPTION OO ON(OO.ORDER_NO = ORD.ORDER_NO)
+		JOIN PRODUCT PR ON(PR.PRODUCT_NO = ORD.PRODUCT_NO)
+		JOIN PURCHASE PU ON(PU.PURCHASE_NO = ORD.PURCHASE_NO)
+        JOIN PRODUCT_IMG PIMG ON(PIMG.PRODUCT_NO = ORD.PRODUCT_NO)
+		WHERE ORD.MEMBER_NO = #{memberNo}
+        AND PRODUCT_IMG_LEVEL = 0
+		AND PR.PRODUCT_CD = 3
+		AND PU.REFUND_YN = 'N'
+	</select>
+	
+	
+	<!-- 정기 구독 결제 상품 구매 목록 -->
+	<select id="subscription" resultMap="order_rm">
+	SELECT ORD.ORDER_NO, ORD.PRODUCT_NO, PU.TOTAL_PRICE, PRODUCT_AMOUNT, ORD.MEMBER_NO, ORD.PURCHASE_NO, ORDER_OPTION, 
+		PRODUCT_NM, PU.PRODUCT_CD, REFUND_YN, PAYMENT_DT, PU.PRODUCT_CD, PAYMENT_STATUS , M.MEMBER_SERVICE
+		FROM "ORDER" ORD
+		JOIN MEMBER M ON(ORD.MEMBER_NO=M.MEMBER_NO )
+		JOIN ORDER_OPTION OO ON(OO.ORDER_NO = ORD.ORDER_NO)
+		JOIN PRODUCT PR ON(PR.PRODUCT_NO = ORD.PRODUCT_NO)
+		JOIN PURCHASE PU ON(PU.PURCHASE_NO = ORD.PURCHASE_NO)
+        JOIN PRODUCT_IMG PIMG ON(PIMG.PRODUCT_NO = ORD.PRODUCT_NO)
+		WHERE ORD.MEMBER_NO = #{memberNo}
+		AND PR.PRODUCT_CD = 2
+		AND PU.REFUND_YN = 'N'
+	</select>
+	
+	<!-- 마이페이지 메인 상품 조회-->
+	<select id="mypageMain" resultMap="order_rm">
+	SELECT ORD.ORDER_NO, ORD.PRODUCT_NO, PU.TOTAL_PRICE, PRODUCT_AMOUNT, ORD.MEMBER_NO, ORD.PURCHASE_NO, ORDER_OPTION, 
+		PRODUCT_NM, PR.PRODUCT_CD, REFUND_YN, PAYMENT_DT, PAYMENT_STATUS, M.MEMBER_NAME, 
+		(TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD')) - TO_DATE( M.ENROLL_DT))EDT, PR.CREATE_DT, M.MEMBER_SERVICE
+		FROM "ORDER" ORD
+		JOIN MEMBER M ON(ORD.MEMBER_NO=M.MEMBER_NO ) 
+		JOIN ORDER_OPTION OO ON(OO.ORDER_NO = ORD.ORDER_NO)
+		JOIN PRODUCT PR ON(PR.PRODUCT_NO = ORD.PRODUCT_NO)
+		JOIN PURCHASE PU ON(PU.PURCHASE_NO = ORD.PURCHASE_NO)
+        JOIN PRODUCT_IMG PIMG ON(PIMG.PRODUCT_NO = ORD.PRODUCT_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		AND PU.REFUND_YN = 'N'
+	</select>
+	
+	<!-- 일반 상품 구매내역 페이지 네이션 -->
+	<select id="purchaseListCount" resultType="_int">
+		SELECT COUNT(*) FROM "ORDER" O
+        JOIN PRODUCT P  ON(P.PRODUCT_NO = O.PRODUCT_NO)
+        WHERE O.MEMBER_NO = #{memberNo}
+		AND PRODUCT_CD = 1
+	</select>
+	
+	<!-- 원데이 클래스 상품 구매내역 페이지 네이션 -->
+	<select id="classListCount" resultType="_int">
+		SELECT COUNT(*) FROM "ORDER" O
+        JOIN PRODUCT P  ON(P.PRODUCT_NO = O.PRODUCT_NO)
+        WHERE O.MEMBER_NO = #{memberNo}
+		AND PRODUCT_CD = 3
+	</select>
+	
+	<!-- 정기 구독 상품 구매내역 페이지 네이션 -->
+	<select id="subListCount" resultType="_int">
+		SELECT COUNT(*) FROM "ORDER" O
+        JOIN PRODUCT P  ON(P.PRODUCT_NO = O.PRODUCT_NO)
+        WHERE O.MEMBER_NO = #{memberNo}
+		AND PRODUCT_CD = 2
+	</select>
+	
+	<!-- 일반 결제 취소 -->
+	<update id="cancelPayment" parameterType="_int">
+		UPDATE PURCHASE SET 
+		REFUND_YN = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+        AND PRODUCT_NO = #{productNo}
+        AND PRODUCT_CD = 1
+	</update>
+	
+	<!-- 원데이클래스 결제 취소 -->
+	<update id="cancelOnedayClass" parameterType="_int">
+		UPDATE PURCHASE SET 
+		REFUND_YN = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+        AND PRODUCT_NO = #{productNo}
+        AND PRODUCT_CD = 3
+	</update>
+	
+	<!-- 정기 구독 결제 취소 -->
+	<update id="cancelSubscription" parameterType="_int">
+		UPDATE PURCHASE SET 
+		REFUND_YN = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+        AND PRODUCT_CD = 2
+        AND PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 회원 가입일 계산 -->
+	<select id="memberDate" resultType="_int">
+		SELECT (TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD')) - TO_DATE( ENROLL_DT)) EDT 
+		FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+</mapper>

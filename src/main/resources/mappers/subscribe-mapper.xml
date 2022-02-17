@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="subscribeMapper">
+
+	<resultMap type="Subscribe" id="subscribe_rm">
+		<id property="productNo" column="PRODUCT_NO" />
+
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="productPrice" column="PRODUCT_PRICE" />
+		<result property="productCode" column="PRODUCT_CD" />
+
+		<result property="storeExp" column="STORE_EXP" />
+		<result property="storeAmount" column="STORE_AMOUNT" />
+		<result property="storeMemo" column="STORE_MEMO" />
+
+		<result property="subOptionNo" column="SUB_OPTION_NO" />
+		<result property="subOptionContent" column="SUB_OPTION_CONTENT" />
+		<result property="subOptionCode" column="SUB_OPTION_CD" />
+
+		<result property="likecount" column="LIKECOUNT" />
+
+		<result property="imgPath" column="PRODUCT_IMG_PATH" />
+		<result property="imgName" column="PRODUCT_IMG_NAME" />
+		<result property="imgLevel" column="PRODUCT_IMG_LEVEL" />
+
+		<result property="memberNo" column="MEMBER_NO" />
+	</resultMap>
+	
+	<resultMap type="edu.kh.jvj.subscribe.model.vo.ProductImage" id="productImg_rm">
+		<id property="productImgNo" column="PRODUCT_IMG_NO" />
+		<result property="productImgPath" column="PRODUCT_IMG_PATH" />
+		<result property="productImgName" column="PRODUCT_IMG_NAME" />
+		<result property="productImgLevel" column="PRODUCT_IMG_LEVEL" />
+		<result property="productNo" column="PRODUCT_NO" />
+	</resultMap>
+	
+	
+	<resultMap type="Search" id="search_rm">
+		<id property="productNo" column="PRODUCT_NO" />
+
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="productPrice" column="PRODUCT_PRICE" />
+		<result property="productCode" column="PRODUCT_CD" />
+		<result property="storeAmount" column="STORE_AMOUNT" />
+	</resultMap>
+	
+	<!-- 구독 이미지 조회 -->
+	<select id="selectProductImageList" resultMap="productImg_rm">
+		SELECT * FROM PRODUCT_IMG 
+		WHERE PRODUCT_NO = ${productNo} 
+		ORDER BY PRODUCT_IMG_LEVEL 
+	</select>
+	
+	<!-- 구독 빵 상세페이지 조회 -->
+	<select id="selectSubBread" resultMap="subscribe_rm">
+		SELECT PRODUCT_NO, PRODUCT_NM, PRODUCT_PRICE, 
+			SUB_OPTION_NO, SUB_OPTION_CONTENT, SUB_OPTION_CD
+		FROM PRODUCT
+        JOIN SUB_OPTION USING (PRODUCT_NO)	
+		WHERE PRODUCT_NO = ${productNo}
+	</select>
+	
+	
+	<insert id="likeSub">
+		INSERT INTO "LIKE" VALUES(
+			${productNo}, ${loginMember}
+		)
+	</insert>
+	
+	<delete id="undolike">
+		DELETE FROM "LIKE"
+		WHERE PRODUCT_NO = ${productNo}
+		AND MEMBER_NO = ${loginMember}
+	</delete>
+	<select id="likecheck" resultType="_int">
+		SELECT COUNT(*) FROM "LIKE"
+		WHERE PRODUCT_NO = ${productNo}
+		AND MEMBER_NO = ${loginMember}
+	</select>
+	
+	
+	<select id="search" resultMap="search_rm">
+		SELECT PRODUCT_NO, PRODUCT_NM, PRODUCT_PRICE, STORE_AMOUNT
+		FROM PRODUCT 
+		LEFT JOIN STORE_DETAIL USING (PRODUCT_NO)
+		WHERE PRODUCT_NM LIKE '%' || #{sv} || '%'
+		AND PRODUCT_CD = 1
+		AND STORE_AMOUNT &gt; 0
+	</select>
+	
+	
+</mapper>

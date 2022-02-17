@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+			<typeAlias alias="onedayclass" type="edu.kh.jvj.onedayclass.model.vo.OnedayClass" />
+			<typeAlias alias="store" type="edu.kh.jvj.store.model.vo.Store" />
+			<typeAlias alias="Member" type="edu.kh.jvj.member.model.vo.Member" />
+			<typeAlias alias="Coupon" type="edu.kh.jvj.mypage.model.vo.Coupon" />
+			<typeAlias alias="CouponStatus" type="edu.kh.jvj.mypage.model.vo.CouponStatus" />
+			<typeAlias alias="Like" type="edu.kh.jvj.mypage.model.vo.Like" />
+			<typeAlias alias="Cart" type="edu.kh.jvj.cart.model.vo.Cart" />
+			<typeAlias alias="Subscribe" type="edu.kh.jvj.subscribe.model.vo.SubVO" />
+			<typeAlias alias="Review" type="edu.kh.jvj.review.model.vo.Review" />
+		    <typeAlias alias="Chat" type="edu.kh.jvj.chat.model.vo.Chat" />
+		    <typeAlias alias="ChatMessage" type="edu.kh.jvj.chat.model.vo.ChatMessage" />
+			<typeAlias alias="Search" type="edu.kh.jvj.subscribe.model.vo.SearchVO" />
+			<typeAlias alias="Review" type="edu.kh.jvj.review.model.vo.Review" />
+			<typeAlias type="edu.kh.jvj.mypage.model.vo.Order" alias="Order"/>
+			<typeAlias type="edu.kh.jvj.mypage.model.vo.OrderOption" alias="OrderOption"/>
+			<typeAlias type="edu.kh.jvj.mypage.model.vo.Product" alias="Product"/>
+			<typeAlias type="edu.kh.jvj.mypage.model.vo.Purchase" alias="Purchase"/>
+            <typeAlias alias="ChatMessage" type="edu.kh.jvj.chat.model.vo.ChatMessage" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/classlist-mapper.xml" />
+		<mapper resource="/mappers/admin-mapper.xml" />
+		<mapper resource="/mappers/store-mapper.xml" />
+		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/mypage-mapper.xml" />
+		<mapper resource="/mappers/cart-mapper.xml" />
+		<mapper resource="/mappers/subscribe-mapper.xml" />
+		<mapper resource="/mappers/payment-mapper.xml" />
+		<mapper resource="/mappers/review-mapper.xml" />
+		<mapper resource="/mappers/chatting-mapper.xml" />
+
+
+	</mappers>
+	
+	
+</configuration>

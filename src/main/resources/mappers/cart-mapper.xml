@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cartMapper">
+	<resultMap type="Cart" id="cart_rm">
+		<id property="cartNo" column="CART_NO" />
+		<result property="addq" column="ADD_Q" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="price" column="PRODUCT_PRICE" />
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="parentNo" column="CART_NO2" />
+		<result property="imgPath" column="IMGPATH" />
+		<result property="discountPer" column="DISCOUNT_PER" />
+		<result property="amount" column="STORE_AMOUNT" />
+
+	</resultMap>
+
+	<!-- 장바구니에 상품 하나 추가 -->
+	<insert id="addCart">
+		INSERT INTO CART
+		VALUES(SEQ_CART_NO.NEXTVAL,#{addq},#{productNo},#{memberNo},0)
+		<selectKey order="AFTER" resultType="_int"
+			keyProperty="cartNo">
+			SELECT SEQ_CART_NO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<!-- 장바구니에 추가옵션추가 -->
+	<insert id="addSub">
+		INSERT INTO CART
+		VALUES(SEQ_CART_NO.NEXTVAL,#{addq},#{productNo},#{memberNo},#{cartNo})
+	</insert>
+	<!-- 장바구니 목록을 봅니다 -->
+	<select id="selectCartList" resultMap="cart_rm">
+		SELECT
+		CART_NO,PRODUCT_NO,ADD_Q,CART_NO2,PRODUCT_NM,PRODUCT_PRICE,PRODUCT_IMG_PATH||PRODUCT_IMG_NAME
+		IMGPATH,NVL(DISCOUNT_PER, 0)DISCOUNT_PER,STORE_AMOUNT FROM CART
+		LEFT JOIN PRODUCT USING(PRODUCT_NO)
+		LEFT JOIN
+		PRODUCT_IMG USING(PRODUCT_NO)
+		LEFT JOIN DISCOUNT USING(PRODUCT_NO)
+		LEFT JOIN STORE_DETAIL USING(PRODUCT_NO)
+		WHERE MEMBER_NO =#{memberNo} AND
+		PRODUCT_IMG_LEVEL = 0
+		ORDER BY 1
+	</select>
+	<!-- 장바구니를 비웁니다. -->
+	<delete id="deleteCart">
+		DELETE FROM CART
+		WHERE (CART_NO = #{cartNo} OR CART_NO2 = #{cartNo} ) AND MEMBER_NO
+		=#{memberNo}
+	</delete>
+	<!-- 장바구니 중복 목록을 합쳐서 상품번호와 수량를 가져옴 -->
+	<select id="selectProductList" resultMap="cart_rm">
+	SELECT PRODUCT_NO,SUM(ADD_Q) ADD_Q FROM CART
+	WHERE MEMBER_NO = #{memberNo}
+	GROUP BY PRODUCT_NO
+	</select>
+	<!-- 장바구니 중복 목록을 합쳐서 상품번호와 수량를 가져옴 -->
+	<select id="selectProductOne" resultMap="cart_rm">
+	SELECT PRODUCT_NO,SUM(ADD_Q) ADD_Q FROM CART
+	WHERE MEMBER_NO = #{memberNo} AND PRODUCT_NO = #{productNo}
+	GROUP BY PRODUCT_NO
+	</select>
+	<!--  재고확인 -->
+	<select id="selectAmount" resultType="_int">
+	SELECT STORE_AMOUNT FROM STORE_DETAIL
+	WHERE PRODUCT_NO = #{productNo}
+	</select>
+	<!-- 재고보다 상품수량이 많으면 상품비움 -->
+	<delete id="updateCart">
+	DELETE FROM CART
+	WHERE PRODUCT_NO = #{productNo} 
+	AND MEMBER_NO = #{memberNo}
+	</delete>
+	<delete id="deleteAllCart">
+	DELETE FROM CART
+	WHERE MEMBER_NO = #{memberNo}
+	</delete>
+	
+	
+	<update id="plusAddq">
+	UPDATE CART SET ADD_Q = ADD_Q + 1
+	WHERE CART_NO = #{cartNo} AND MEMBER_NO = #{memberNo}
+	</update>
+	<update id="minusAddq">
+	UPDATE CART SET ADD_Q = ADD_Q - 1
+	WHERE CART_NO = #{cartNo}
+	</update>
+	
+	<select id="selectPdtAmount" resultMap="cart_rm">
+	SELECT PRODUCT_NO,STORE_AMOUNT FROM CART
+	LEFT JOIN STORE_DETAIL USING(PRODUCT_NO)
+	WHERE CART_NO = #{cartNo}
+	</select>
+</mapper>

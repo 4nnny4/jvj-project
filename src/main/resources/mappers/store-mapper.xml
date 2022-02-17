@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="storeMapper">
+
+
+	<resultMap type="Store" id="store_rm">
+		<id property="storeNo" column="PRODUCT_NO" />
+		<result property="storeName" column="PRODUCT_NM" />
+		<result property="price" column="PRODUCT_PRICE" />
+		<result property="memo" column="STORE_MEMO" />
+		<result property="storeExp" column="STORE_EXP" />
+		<result property="stock" column="STORE_AMOUNT" />
+		<result property="storecate" column="STORE_TYPE" />
+		<result property="discountStart" column="DISCOUNT_START_DT" />
+		<result property="discountEnd" column="DISCOUNT_END_DT" />
+		<result property="discountPer" column="DISCOUNT_PER" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="createDate" column="CREATE_DT" />
+		<result property="likeit" column="LIKEIT" />
+		<result property="imgPath" column="STORE_IMG" />
+		<result property="imgLevel" column="PRODUCT_IMG_LEVEL" />
+	</resultMap>
+
+
+	<!-- 카테고리 스토어상품 카운트 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+		LEFT JOIN STORE_DETAIL USING(PRODUCT_NO)
+		LEFT JOIN PRODUCT_IMG USING(PRODUCT_NO)
+		WHERE PRODUCT_CD = 1
+		AND
+		PRODUCT_IMG_LEVEL = 0
+		<if test="ct>0">
+			AND STORE_TYPE=#{ct}
+
+		</if>
+	</select>
+
+
+	<!-- 상품조회 -->
+	<select id="selectStoreList" resultMap="store_rm">
+		SELECT A.PRODUCT_NO,A.PRODUCT_NM,A.PRODUCT_PRICE,
+		B.STORE_AMOUNT,B.STORE_MEMO,B.STORE_TYPE,
+		NVL(C.DISCOUNT_PER, 0)
+		DISCOUNT_PER,
+		(E.PRODUCT_IMG_PATH || E.PRODUCT_IMG_NAME) STORE_IMG
+		<if test="memberNo!=null and !memberNo.equals('')">
+			, (SELECT COUNT(*) FROM "LIKE" D WHERE MEMBER_NO =
+			#{memberNo} AND
+			D.PRODUCT_NO = A.PRODUCT_NO) LIKEIT
+		</if>
+		FROM PRODUCT A
+		LEFT JOIN STORE_DETAIL B ON A.PRODUCT_NO = B.PRODUCT_NO
+		LEFT JOIN DISCOUNT C ON A.PRODUCT_NO = C.PRODUCT_NO
+		JOIN PRODUCT_IMG E
+		ON A.PRODUCT_NO = E.PRODUCT_NO
+		WHERE PRODUCT_CD= 1
+		AND PRODUCT_IMG_LEVEL
+		= 0
+		<if test="ct>0">
+			AND STORE_TYPE=#{ct}
+		</if>
+
+		<choose>
+
+			<when test="op==0">ORDER BY 1 DESC</when>
+			<when test="op==1">ORDER BY PRODUCT_PRICE*(100-DISCOUNT_PER)/100</when>
+			<when test="op==2">ORDER BY PRODUCT_PRICE*(100-DISCOUNT_PER)/100 DESC
+			</when>
+			<when test="op==3">ORDER BY LIKEIT DESC</when>
+
+		</choose>
+	</select>
+	<!-- 스토어 상세페이지 -->
+	<select id="selectStoreDetail" resultMap="store_rm">
+		SELECT
+		A.PRODUCT_NO,A.PRODUCT_NM,A.PRODUCT_PRICE,B.STORE_AMOUNT,
+		NVL(C.DISCOUNT_PER, 0)DISCOUNT_PER,B.STORE_TYPE
+		<if test="memberNo!=null and !memberNo.equals('')">
+			, (SELECT COUNT(*) FROM "LIKE" D WHERE MEMBER_NO =
+			#{memberNo} AND
+			D.PRODUCT_NO = A.PRODUCT_NO) LIKEIT
+		</if>
+		FROM
+		PRODUCT A
+		LEFT
+		JOIN STORE_DETAIL B ON A.PRODUCT_NO = B.PRODUCT_NO
+		LEFT
+		JOIN DISCOUNT C
+		ON A.PRODUCT_NO = C.PRODUCT_NO
+		WHERE PRODUCT_CD= 1
+		AND A.PRODUCT_NO=#{storeNo}
+	</select>
+	<!-- 썸네일 다불러오기 -->
+	<select id="storeImgSelect" resultMap="store_rm">
+		SELECT
+		PRODUCT_IMG_PATH||PRODUCT_IMG_NAME STORE_IMG, PRODUCT_IMG_LEVEL FROM
+		PRODUCT_IMG
+		WHERE PRODUCT_NO = #{no}
+	</select>
+	<!-- 좋아요 -->
+	<insert id="likeit">
+		INSERT INTO "LIKE"(PRODUCT_NO,MEMBER_NO)
+		VALUES(#{storeNo},#{memberNo})
+	</insert>
+	<!-- 싫어요 -->
+	<delete id="doesntLikeit">
+		DELETE FROM "LIKE"
+		WHERE PRODUCT_NO = #{storeNo}
+		AND
+		MEMBER_NO =#{memberNo}
+	</delete>
+	<!-- 추가 옵션 상품 불러오기 -->
+	<select id="advantage" resultMap="store_rm">
+		SELECT
+		PRODUCT_NO,PRODUCT_NM,PRODUCT_PRICE,STORE_AMOUNT FROM PRODUCT
+		LEFT JOIN
+		STORE_DETAIL USING(PRODUCT_NO)
+		WHERE PRODUCT_NO IN (1427,1429,1428)
+	</select>
+
+	<select id="selectpdtCount" resultType="_int">
+		SELECT COUNT(ADD_Q) FROM CART
+		WHERE PRODUCT_NO = #{storeNo} AND MEMBER_NO= #{memberNo}
+	</select>
+	<!-- 재고확인 -->
+	<select id="selectAmount" resultType="_int">
+		SELECT SUM(ADD_Q) FROM CART
+		WHERE MEMBER_NO = #{memberNo} AND PRODUCT_NO = #{storeNo}
+		GROUP BY
+		PRODUCT_NO
+	</select>
+	<!-- 세일 만료 -->
+	<delete id="expiredSale">
+		DELETE FROM DISCOUNT
+		WHERE (DISCOUNT_END_DT-SYSDATE) <![CDATA[<]]>
+		0
+	</delete>
+
+	<!-- 베스트 상품 찾기 -->
+	<select id="selectRankProduct" resultMap="store_rm">
+		SELECT *
+		FROM(
+		SELECT COUNT(PRODUCT_NO) STOCK,PRODUCT_NO FROM PRODUCT
+		NATURAL JOIN "ORDER"
+		WHERE PRODUCT_CD = 1
+		GROUP BY PRODUCT_NO
+		ORDER BY STOCK DESC)
+		WHERE ROWNUM = 1
+	</select>
+
+</mapper>

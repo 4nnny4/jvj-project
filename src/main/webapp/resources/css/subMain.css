@@ -1,0 +1,77 @@
+.sub-top-area{
+    background-color: #FEF5E8;
+    text-align: center;
+    display: inherit;
+}
+
+.sub-top-area div:first-child{
+    
+    padding: 50px 0 50px;
+}
+.sub-top-area span{
+    
+    color: #564334;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+   
+}
+.sub-top-area div:last-child{
+    padding-bottom: 50px;
+}
+.top-img{
+    text-align: center;
+    border-radius: 5px;
+}
+
+
+
+.subscribe h1{
+	margin-top: 35px; 
+	display: inline-block;
+}
+
+
+.subscribe{
+    text-align: center;
+    height: 592px;
+    margin-bottom:150px;
+}
+
+.subs-wrap{
+    display: inline-block;
+}
+
+.subs-wrap p{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.subs-item{
+    width:588px;
+    height:380px;
+    /* background-size:cover;
+    background-repeat:no-repeat; */
+    display: inline-block;
+    margin:12px 12px 0 12px;
+    border-radius: 5px;
+}
+
+.subs-item:hover{
+	transition-duration:0.4s;
+}
+/* .subs-img1{
+
+	background-image: url("add-btn.png");
+	
+}
+.subs-img2{
+
+	background-image: url("경로");	
+	
+} */
+
+
+
+
+

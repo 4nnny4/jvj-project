@@ -1,0 +1,84 @@
+.j-wrapper{
+
+    margin:auto;
+    text-align: center;
+    width:1200px;
+}
+.hr{
+    width:100%;
+    background-color: #d3c5b6;
+    height:2px;
+}
+
+.inline-block>*{
+    text-align: left;
+    display: inline-block;
+    
+    margin:auto;
+    
+}
+.inline-block{
+    vertical-align: top;
+    width: 1200px;
+    
+}
+.j-img{
+    width:130px; 
+    height:130px;
+       
+  background-repeat: no-repeat;
+  background-size :cover;
+    border-radius: 10px;
+    margin-right: 24px;
+}
+.j-pmbtn{
+    
+    
+    cursor: pointer;
+    
+}
+.couponCss{
+    width: 30%;
+    height: 40px;
+    font-size: 22px;
+    margin-right: 30px;
+}
+.j-pmbtn:active,.x-btn:active{
+    
+    transform: translate3d(0, 2px, 0);
+	text-shadow: 2px 8px 8px -5px rgba(0, 0, 0, 0.3);
+}
+
+
+.x-btn{
+    float:right; background:#d3c5b6;width:20px;height:20px;
+    margin:0 20px;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+}
+.j-notice{
+    height: 120px;width:1130px; background:#f6f6f6;text-align: left; padding: 40px 0 0 70px ;margin-bottom:50px;
+    border-radius: 5px;
+}
+.j-sum>p{
+    font-size: 24px;
+}
+.j-sum{
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    height: 70px;
+   padding-top:30px;
+   margin-bottom: 30px;
+   text-align: right;
+   
+}
+
+.j-buy{
+    border-radius: 5px;
+    background-color: #A78A6C;
+    color:white;
+    padding: 1px 0;
+    margin-bottom: 90px;
+    cursor: pointer;
+}

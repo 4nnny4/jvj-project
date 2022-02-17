@@ -1,0 +1,146 @@
+@charset "UTF-8";   
+
+.title-section {
+	text-align: center;
+	margin: 80px 0 80px 0;
+}
+
+.title-section > p {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+
+
+/* 회원가입 */
+.member-form-info{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+
+
+.input-info {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.input-info-div{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.input-info span{
+    display: inline-block;
+    color: #A78A6C;
+    margin-top: 4px;
+}
+
+.member-info{
+    border: 2px solid #A78A6C;
+    border-radius: 4px;
+    width: 300px;
+    height: 40px;
+}
+
+.p-div, .input-div{
+    float: left;
+    margin-right: 15px;
+    margin-left: 15px;
+	line-height: 40px;
+}
+.p-div{
+    width: 100px;
+}
+
+
+
+#email-select, .email-input{
+    width: 150px;
+}
+
+#email-select {
+    height: 46px;
+}
+
+
+#sendEmail{
+    cursor: pointer;
+    background-color: #A78A6C;
+    width: 100px;
+    height: 45px;
+    border: 0;
+    border-radius: 4px;
+    color: #FFFFFF;
+}
+.email-check-btn{
+    cursor: pointer;
+    background-color: #A78A6C;
+    width: 120px;
+    height: 45px;
+    border: 0;
+    border-radius: 4px;
+    color: #FFFFFF;
+}
+
+
+#search-btn{
+	cursor: pointer;
+    background-color: #A78A6C;
+    width: 300px;
+    height: 45px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+
+.flex-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.goSignUp {
+    display: inline-block;
+}
+
+.goSignUp > li{
+    float: left;
+}
+
+.updown {
+    display: inline;
+    border: 0.5px solid black;
+    width: 0.1px;
+    height: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    opacity: 20%;
+}
+
+
+/* 이메일 인증번호 */
+#email-checkNum{
+    display: none;
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* 중복검사, 유효성 검사용들 p */
+.check-p{
+	font-size: small;
+    display: inline;
+    font-weight: normal;
+    
+}

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+
+	<resultMap type="edu.kh.jvj.admin.model.vo.Admin" id="admin_rm">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="adminId" column="MEMBER_EMAIL" />
+		<result property="adminPw" column="MEMBER_PW" />
+		<result property="nickName" column="MEMBER_NICKNAME" />
+		<result property="adminName" column="MEMBER_NAME" />
+		<result property="matchYn" column="MATCH_YN" />
+	</resultMap>
+	<resultMap type="edu.kh.jvj.notice.model.vo.Notice" id="notice_rm">
+		<id property="noticeNo" column="NOTICE_NO" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="content" column="NOTICE_CONTENT" />
+		<result property="createDt" column="NOTICE_CREATE_DT" />
+		<result property="noticeCd" column="NOTICE_CD" />
+		<result property="noticeCateName" column="NOTICE_TYPE_NM" />
+	</resultMap>
+	<resultMap type="edu.kh.jvj.admin.model.vo.SearchedMember" id="member_rm">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="enrollDt" column="ENROLL_DT" />
+		<result property="statusCode" column="STATUS_CD" />
+		<result property="paysum" column="PAYSUM" />
+	</resultMap>
+	<resultMap type="edu.kh.jvj.admin.model.vo.SimpleProduct" id="product_rm">
+		<id property="productNo" column="PRODUCT_NO" />
+		<result property="title" column="PRODUCT_NM" />
+		<result property="writecate" column="PRODUCT_CD" />
+		<result property="cateName" column="PRODUCT_CATE" />
+		<result property="createDate" column="CREATE_DT" />
+		<result property="price" column="PRODUCT_PRICE" />
+	</resultMap>
+		<resultMap type="edu.kh.jvj.admin.model.vo.AdminStore" id="store_rm">
+		<id property="storeNo" column="PRODUCT_NO" />
+		<result property="storeName" column="PRODUCT_NM" />
+		<result property="price" column="PRODUCT_PRICE" />
+		<result property="memo" column="STORE_MEMO" />
+		<result property="storeExp" column="STORE_EXP" />
+		<result property="stock" column="STORE_AMOUNT" />
+		<result property="storecate" column="STORE_TYPE" />
+		<result property="discountStart" column="DISCOUNT_START_DT" />
+		<result property="discountEnd" column="DISCOUNT_END_DT" />
+		<result property="discountPer" column="DISCOUNT_PER" />
+		<result property="createDate" column="CREATE_DT" />
+		<collection property="classImgList" column="PRODUCT_NO"
+		javaType="java.util.ArrayList" ofType ="edu.kh.jvj.onedayclass.model.vo.ProductImage" 
+		 select="selectProductImageList" />
+	</resultMap>
+		<resultMap type="edu.kh.jvj.onedayclass.model.vo.ProductImage" id="productImg_rm">
+		<id property="productImgNo" column="PRODUCT_IMG_NO" />
+		<result property="productImgPath" column="PRODUCT_IMG_PATH" />
+		<result property="productImgName" column="PRODUCT_IMG_NAME" />
+		<result property="productImgLevel" column="PRODUCT_IMG_LEVEL" />
+		<result property="productNo" column="PRODUCT_NO" />
+	</resultMap>
+	<resultMap type="edu.kh.jvj.admin.model.vo.SubsOptions" id="suboptions_rm">
+		<id property="suboptionNo" column="SUB_OPTION_NO" />
+		<result property="subOptionName" column="SUB_OPTION_CONTENT" />
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="subOptionCd" column="SUB_OPTION_CD" />
+		<result property="productNo" column="PRODUCT_NO" />
+	</resultMap>
+    <resultMap id="subsinfo_rm" extends="product_rm" type="edu.kh.jvj.admin.model.vo.SubsInfo">
+   		<result property="userId" column="MEMBER_EMAIL" />
+		<result property="userNickName" column="MEMBER_NICKNAME" />
+		<result property="StartDay" column="PAYMENT_DT" />
+		<result property="options" column="ORDER_OPTION" />
+		<result property="YN" column="PAYMENT_STATUS" />
+     	<collection property="classImgList" column="PRODUCT_NO"
+		javaType="java.util.ArrayList" ofType ="edu.kh.jvj.onedayclass.model.vo.ProductImage" 
+		select="selectProductImageList" />
+    </resultMap>
+    <resultMap id="makecoupon_rm" type="edu.kh.jvj.admin.model.vo.MadeCoupon">
+     	<id property="couponNo" column="MCOUPON_NO" />
+		<result property="couponName" column="MCOUPON_NM" />
+		<result property="discountPer" column="DISCOUNT_PER" />
+		<result property="createDate" column="CREATE_DT" />
+		<result property="expireDate" column="EXPIRE_DT" />
+		<result property="adminNo" column="MEMBER_NO" />
+		<result property="couponStatusCode" column="MCOU_STATUS_CD" />
+		<result property="couponLimit" column="MCOUPON_LIMIT" />
+		<result property="hashName" column="HASHNAME" />
+		<result property="noticeNo" column="NOTICE_NO" />
+    </resultMap>
+    <resultMap id="storerank_rm" type="edu.kh.jvj.admin.model.vo.SalesRank">
+     	<id property="rank" column="RANK" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="sales" column="SALES" />
+		<result property="payday" column="PAYMENT_DT" />
+		<result property="productName" column="PRODUCT_NM" />
+    </resultMap>
+    <resultMap id="reviews_rm" type="edu.kh.jvj.admin.model.vo.Reviews">
+     	<id property="reviewNo" column="REVIEW_NO" />
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="userId" column="MEMBER_EMAIL" />
+		<result property="reviewPoint" column="REVIEW_POINT" />
+		<result property="reviewTitle" column="REVIEW_TITLE" />
+		<result property="reviewContent" column="REVIEW_CONTENT" />
+		<result property="reviewStatus" column="REVIEW_STATUS_CD" />
+    </resultMap>
+    
+	<select id="selectProductImageList" resultMap="productImg_rm">
+		SELECT * FROM PRODUCT_IMG WHERE PRODUCT_NO = #{productNo} 
+		ORDER BY PRODUCT_IMG_LEVEL 
+	</select>
+	<!-- 상품 공통 인서트 -->
+	<insert id="insertProductCommon" >
+  		<selectKey order="BEFORE" resultType="_int" keyProperty="productNo">
+ 			SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
+  		</selectKey>
+		INSERT INTO PRODUCT VALUES(
+		#{productNo} , #{title} , #{price} , DEFAULT , #{writecate}
+		)
+	</insert>
+	<!-- 클래스 detail 인서트 -->
+	<insert id="insertClassProduct" >
+		INSERT INTO CLASS_DETAIL VALUES(
+			#{productNo} , #{people} , #{editordata} , #{classdate} , 1 ,#{place} , #{startEndTime} , DEFAULT
+		)
+	</insert>
+	<insert id="insertProductImg">
+		INSERT INTO PRODUCT_IMG
+		SELECT SEQ_PRODUCT_IMG_NO.NEXTVAL, A.* FROM 
+		<foreach collection="list" item="img" 
+			open="(" close=") A"  separator=" UNION ALL ">
+		SELECT #{img.imgPath} PRODUCT_IMG_PATH , #{img.imgName} PRODUCT_IMG_NAME,
+		 #{img.imgLevel} PRODUCT_IMG_LEVEL
+		, #{img.productNo} PRODUCT_NO 
+		FROM DUAL
+		</foreach>		
+	</insert>
+	
+	<!-- 공지사항 인서트 -->
+	<insert id="insertNotice">
+  		<selectKey order="BEFORE" resultType="_int" keyProperty="noticeNo">
+ 			SELECT SEQ_NOTICE_NO.NEXTVAL FROM DUAL
+  		</selectKey>
+		INSERT INTO NOTICE_BOARD VALUES(
+			#{noticeNo} , #{noticeTitle}, #{editordata}, DEFAULT , #{loginAdmin} ,#{noticeCd}
+		)
+	</insert>
+	<!-- 프로모션 발급쿠폰 인서트 -->
+	<insert id="addMakeCoupons">
+		INSERT INTO MAKECOUPON
+		SELECT SEQ_MCOUPON_NO.NEXTVAL, A.* FROM 
+		<foreach collection="list" item="coup" 
+			open="(" close=") A"  separator=" UNION ALL ">
+		SELECT #{coup.couponName} MCOUPON_NM , #{coup.discountPer} DISCOUNT_PER, SYSDATE CREATE_DT
+		, #{coup.expireDate} EXPIRE_DT
+		, #{coup.adminNo} MEMBER_NO , 1 
+		, #{coup.couponLimit} MCOUPON_LIMIT , '공지쿠폰' HASHNAME , #{coup.noticeNo} NOTICE_NO
+		FROM DUAL
+		</foreach>		
+	</insert>
+	<!-- 프로모션 상세 쿠폰조회 -->
+	<select id="selectCoupons" resultMap="makecoupon_rm">
+		SELECT MCOUPON_NO, MCOUPON_NM, DISCOUNT_PER , 
+		TO_CHAR(CREATE_DT , 'YYYY-MM-DD') CREATE_DT,
+		TO_CHAR(EXPIRE_DT , 'YYYY-MM-DD') EXPIRE_DT,
+		MCOU_STATUS_CD , MCOUPON_LIMIT
+		FROM MAKECOUPON 
+		WHERE NOTICE_NO = #{noticeNo}
+		ORDER BY DISCOUNT_PER DESC
+	</select>
+	<!-- 공지사항 업데이트 -->
+	<update id="updateNotice">
+			UPDATE NOTICE_BOARD SET
+			NOTICE_TITLE = #{title},
+			NOTICE_CONTENT =#{editordata},
+			NOTICE_CD =#{noticecate}
+			WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	<!-- 일반상품 인서트 -->
+	<insert id="insertStoreProduct">
+		INSERT INTO STORE_DETAIL VALUES(
+			#{productNo} , #{editordata},  #{stock} , #{detailcontents},#{storecate} 
+		)
+	</insert>
+	<!-- 할인정보 인서트 -->
+		<insert id="insertStoreDiscount">
+		INSERT INTO DISCOUNT VALUES(
+			#{productNo} , #{discountStart}, #{discountEnd}, #{discountPer}
+		)
+	</insert>
+	<!-- 관리자 로그인 확인 -->
+	<select id="findMatchAdmin" resultMap="admin_rm">
+		SELECT MATCHRESULT.* , MR.MEMBER_NICKNAME, MR.MEMBER_NAME
+		FROM(
+		SELECT MEMBER_NO, COUNT(MEMBER_NO) MATCH_YN FROM MEMBER
+		WHERE MEMBER_EMAIL = #{adminId}
+		AND MEMBER_PW = #{adminPw}
+		AND STATUS_CD = 1
+		AND GRADE_CD = 101
+		GROUP BY MEMBER_NO
+		) MATCHRESULT
+		JOIN MEMBER MR ON (MATCHRESULT.MEMBER_NO= MR.MEMBER_NO)
+	</select>
+	
+	<!-- 공지사항 카운트 -->
+	<select id="countNotice"  resultType="_int">
+		SELECT COUNT(*) FROM NOTICE_BOARD
+		WHERE NOTICE_TITLE LIKE '%'||#{search}||'%' 
+		<if test="cate != 0">
+		AND NOTICE_CD = #{cate}
+		</if>
+	</select>
+
+	<!-- 공지사항 search 리스트 -->
+	<select id="noticeSearchList" parameterType = "map" resultMap="notice_rm">
+		SELECT NOTICE_NO , NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_CREATE_DT , 'YYYY-MM-DD') NOTICE_CREATE_DT, NOTICE_CD
+		 , NOTICE_TYPE_NM
+		FROM NOTICE_BOARD
+		JOIN NOTICE_CATEGORY USING (NOTICE_CD)
+		WHERE NOTICE_TITLE LIKE '%'||#{search}||'%' 
+		<if test="cate != 0">
+			AND  NOTICE_CD = #{cate} 
+		</if>
+		ORDER BY NOTICE_CREATE_DT DESC
+	</select>
+	<!-- 공지사항 상세 -->
+	<select id="oneNotice" resultMap="notice_rm">
+		SELECT NOTICE_NO , NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_CREATE_DT , 'YYYY-MM-DD') NOTICE_CREATE_DT, NOTICE_CD
+		 , NOTICE_TYPE_NM
+		FROM NOTICE_BOARD
+		JOIN NOTICE_CATEGORY USING (NOTICE_CD)
+		WHERE NOTICE_NO = #{noticeNo}
+	</select>
+	
+	<!-- 관리자 발급쿠폰 정보 -->
+	<select id="getMadeCoupon" resultMap="makecoupon_rm">
+		SELECT MCOUPON_NM , DISCOUNT_PER,
+		TO_CHAR(CREATE_DT , 'YYYY-MM-DD') CREATE_DT,
+		TO_CHAR(EXPIRE_DT , 'YYYY-MM-DD') EXPIRE_DT,
+		MCOU_STATUS_CD,  MCOUPON_LIMIT
+		FROM MAKECOUPON
+		WHERE MCOUPON_NO = #{noticeNo}
+	</select>
+	<!-- 회원에 쿠폰 증정 -->
+	<insert id="insertCouponToMember">
+		INSERT INTO COUPON VALUES(
+			SEQ_USERCOUPON.NEXTVAL, #{couponName}, ${discountPer}/100 , #{createDate},#{expireDate}, 1, #{adminNo}
+		)
+	</insert>
+	<!-- 회원 검색 -->
+	<select id="searchMember" resultMap="member_rm">
+		SELECT 
+		MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME, MEMBER_NAME ,
+		NVL ((SELECT SUM(TOTAL_PRICE)  FROM "ORDER" ORD
+		WHERE ORD.MEMBER_NO = MEM.MEMBER_NO) , 0 ) PAYSUM,
+		TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT ,STATUS_CD FROM MEMBER MEM
+		WHERE GRADE_CD = 100
+		<if test="cate == 1">
+			AND MEMBER_EMAIL LIKE '%'||#{search}||'%'
+		</if>
+		<if test="cate == 2">
+			AND MEMBER_NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="cate == 3">
+			AND MEMBER_NICKNAME LIKE '%'||#{search}||'%'
+		</if>
+		ORDER BY ENROLL_DT DESC
+	</select>
+	<!-- 옵션상품 추가 -->
+	<insert id="insertOptionP">
+		INSERT INTO PRODUCT VALUES(
+		SEQ_PRODUCT_NO.NEXTVAL , #{title} , #{price} , DEFAULT , #{writecate}
+		)
+	</insert>
+	<!-- 검색 결과 회원 수 조회 -->
+	<select id="countMember" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE GRADE_CD = 100
+		<if test="cate == 1">
+			AND MEMBER_EMAIL LIKE '%'||#{search}||'%'
+		</if>
+		<if test="cate == 2">
+			AND MEMBER_NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="cate == 3">
+			AND MEMBER_NICKNAME LIKE '%'||#{search}||'%'
+		</if>
+	</select>
+	<!-- 검색 결과 상품 수 조회 -->
+	<select id="countProduct" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+		WHERE PRODUCT_NM LIKE '%'||#{search}||'%'
+		<if test="cate != 0">
+			AND PRODUCT_CD =#{cate}
+		</if>
+	</select>
+	<select id="productselect" resultMap="product_rm">
+		SELECT PRODUCT_NO, PRODUCT_NM ,PRODUCT_PRICE, PRODUCT_CD, PRODUCT_CATE,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') CREATE_DT
+		FROM PRODUCT
+		JOIN PRODUCT_CATEGORY USING(PRODUCT_CD) 
+		WHERE PRODUCT_NM LIKE '%'||#{search}||'%'
+		<if test="cate != 0">
+			AND PRODUCT_CD =#{cate}
+		</if>
+		ORDER BY CREATE_DT DESC
+	</select>
+	<select id="getStoreInfo" resultMap="store_rm">
+		SELECT 
+		PR.PRODUCT_NM, PR.PRODUCT_PRICE,
+		TO_CHAR(PR.CREATE_DT , 'YYYY-MM-DD') CREATE_DT ,
+		SD.* , TO_CHAR(DIS.DISCOUNT_START_DT , 'YYYY-MM-DD') DISCOUNT_START_DT,
+		TO_CHAR(DIS.DISCOUNT_END_DT , 'YYYY-MM-DD') DISCOUNT_END_DT, DIS.DISCOUNT_PER
+		FROM PRODUCT PR
+		JOIN STORE_DETAIL SD ON (PR.PRODUCT_NO = SD.PRODUCT_NO)
+		LEFT JOIN DISCOUNT DIS ON(PR.PRODUCT_NO = DIS.PRODUCT_NO)
+		WHERE PR.PRODUCT_NO = #{productNo}
+	</select>
+	<update id="updateProductCommon">
+		UPDATE PRODUCT SET
+		PRODUCT_NM = #{title} , 
+		PRODUCT_PRICE= #{price} 
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	<update id="updateStoreProduct">
+		UPDATE STORE_DETAIL SET
+		STORE_EXP = #{editordata} ,
+		STORE_AMOUNT = #{stock} ,
+		STORE_MEMO = #{detailcontents} ,
+		STORE_TYPE = #{storecate}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	<update id="updateStoreDiscount">
+		UPDATE DISCOUNT SET
+		DISCOUNT_START_DT = #{discountStart},
+		DISCOUNT_END_DT = #{discountEnd}, 
+		DISCOUNT_PER = #{discountPer}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	<delete id="deleteImgs" parameterType="map">
+		DELETE FROM PRODUCT_IMG 
+		WHERE PRODUCT_NO = #{productNo}
+		AND PRODUCT_IMG_LEVEL IN (${deleteLevels})	
+	</delete>
+	<update id="updateClassProduct">
+		UPDATE CLASS_DETAIL SET 
+		CLASS_MAX_PPL = #{people},
+		CLASS_EXP = #{editordata},
+		CLASS_DT = #{classdate},
+		PLACE_CODE= #{place},
+		CLASS_TIME = #{startEndTime}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	<select id="checkIsDiscount" resultType="_int">
+		SELECT COUNT(*) FROM DISCOUNT
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	<delete id="deleteStoreDiscount">
+		DELETE FROM DISCOUNT
+		WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	 <select id="getSubsInfo" resultMap="subsinfo_rm">
+	    SELECT 
+	    PR.PRODUCT_NO, PR.PRODUCT_NM, PR.PRODUCT_PRICE,
+	    TO_CHAR(PR.CREATE_DT , 'YYYY-MM-DD') CREATE_DT,
+	    PC.PRODUCT_CD, PC.PRODUCT_CATE,
+	    SD.STORE_EXP
+	    FROM PRODUCT PR
+	    JOIN PRODUCT_CATEGORY PC ON (PR.PRODUCT_CD = PC.PRODUCT_CD)
+	    JOIN STORE_DETAIL SD ON (PR.PRODUCT_NO = SD.PRODUCT_NO)
+	    WHERE PR.PRODUCT_NO = #{productNo}
+	</select>
+	<select id="selectSubsOption" resultMap="suboptions_rm">
+		SELECT SO.* ,PR.PRODUCT_NM FROM SUB_OPTION SO
+		JOIN PRODUCT PR ON (SO.PRODUCT_NO = PR.PRODUCT_NO)
+		WHERE PR.PRODUCT_NO = #{product_No}
+		ORDER BY SUB_OPTION_CD ,SUB_OPTION_NO 
+	</select>
+	<insert id="addSubsOption" >
+		INSERT INTO 
+		SUB_OPTION VALUES (SEQ_SUB_OPTION.NEXTVAL, 
+		#{subOptionName} , #{subOptionCd} , #{productNo})
+	</insert>
+	<delete id="deleteSubsOption" >
+		DELETE FROM SUB_OPTION 
+		WHERE SUB_OPTION_NO = #{suboptionNo}
+	</delete>
+	<update id="changeSubsOption" >
+		UPDATE  SUB_OPTION  SET
+		SUB_OPTION_CONTENT  = #{subOptionName}
+		WHERE SUB_OPTION_NO = #{suboptionNo}
+	</update>
+	<select id="selectImgList" resultType="string">
+		SELECT PRODUCT_IMG_NAME FROM PRODUCT_IMG
+	</select>
+	<insert id="makingCoupon">
+	INSERT INTO MAKECOUPON VALUES(
+		SEQ_MAKECOUPON.NEXTVAL,
+		#{couponName} , #{discountPer} , SYSDATE , #{expireDate} , #{adminNo} , 1 , 
+		#{couponLimit} , #{hashName}
+	)
+	</insert>
+	<update id="deductionCoupon">
+		UPDATE MAKECOUPON SET
+		MCOUPON_LIMIT = MCOUPON_LIMIT -1
+		WHERE MCOUPON_NO = #{madeCouponNo}
+	</update>
+	<update id="ChangeCouponStatus">
+		UPDATE MAKECOUPON SET
+		MCOU_STATUS_CD = 2
+		WHERE MCOUPON_NO = #{madeCouponNo}
+	</update>
+	<select id="countGetCoupon" resultType="_int">
+		SELECT COUNT(*) FROM GETCOUPON_HISTORY
+		WHERE MCOUPON_NO = #{couponNo}
+		AND MEMBER_NO = #{adminNo}
+	</select>
+	<insert id="insertCouponHistory">
+		INSERT INTO GETCOUPON_HISTORY VALUES(
+			SEQ_GETCOUPON.NEXTVAL , #{couponNo}, #{adminNo}
+		)
+	</insert>
+	<select id="countSubsMember" resultType="_int">
+		SELECT COUNT(*) FROM "PURCHASE"
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	<select id="getSubsList" resultMap="subsinfo_rm">
+		SELECT 
+		PRO.PRODUCT_NM,  MEM.MEMBER_EMAIL, MEM.MEMBER_NICKNAME,
+		TO_CHAR(PUR.PAYMENT_DT , 'YYYY-MM-DD') PAYMENT_DT,
+		ORDER_OPTION
+		FROM "PURCHASE" PUR
+		JOIN "MEMBER" MEM ON (MEM.MEMBER_NO = PUR.MEMBER_NO)
+		JOIN PRODUCT PRO ON (PRO.PRODUCT_NO = PUR.PRODUCT_NO)
+		JOIN "ORDER" ORD ON (ORD.PURCHASE_NO =PUR.PURCHASE_NO )
+		JOIN "ORDER_OPTION" USING(ORDER_NO)
+		WHERE PUR.PRODUCT_NO = #{productNo}
+	</select>
+	<select id="getStoreRanks" resultMap="storerank_rm">
+			SELECT ROWNUM RANK ,RESULTSETS.* FROM
+        (SELECT SALESFORCE.*, PRODUCT_NM
+		FROM (
+		SELECT  PUR.PRODUCT_NO , COUNT(PUR.PRODUCT_NO) SALES 
+		FROM PURCHASE PUR 
+		JOIN "ORDER" ORD ON(PUR.PURCHASE_NO = ORD.PURCHASE_NO)
+		WHERE PRODUCT_CD = 1
+		AND PUR.PAYMENT_DT > SYSDATE-7
+		GROUP BY PUR.PRODUCT_NO  ) SALESFORCE
+		JOIN PRODUCT PRO ON (SALESFORCE.PRODUCT_NO = PRO.PRODUCT_NO)
+		WHERE ROWNUM  &lt;= 10
+        ORDER BY SALES DESC) RESULTSETS
+	</select>
+	<select id="countReview" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT_REVIEW 
+			JOIN PRODUCT USING (PRODUCT_NO)
+			JOIN MEMBER USING(MEMBER_NO)
+		<if test=" cate gt 0 and cate lt 4">
+			WHERE PRODUCT_CD = #{cate}
+			AND PRODUCT_NM LIKE '%'|| #{search} ||'%'
+		</if>
+		<if test="cate==4">
+			WHERE MEMBER_EMAIL LIKE '%'|| #{search} ||'%'
+		</if>
+	</select>
+	<select id="getReviewList" resultMap="reviews_rm">
+			SELECT 
+			REVIEW_NO,
+			PRODUCT_NM, MEMBER_EMAIL,
+			REVIEW_TITLE,REVIEW_POINT,
+			REVIEW_STATUS_CD
+			FROM PRODUCT_REVIEW 
+			JOIN MEMBER USING(MEMBER_NO)
+			JOIN PRODUCT USING (PRODUCT_NO)
+		<if test=" cate gt 0 and cate lt 4">
+			WHERE PRODUCT_CD = #{cate}
+			AND PRODUCT_NM LIKE '%'|| #{search} ||'%'
+		</if>
+		<if test="cate==4">
+			WHERE MEMBER_EMAIL LIKE '%'|| #{search} ||'%'
+		</if>
+	</select>
+	<select id="getReview" resultType="string">
+		SELECT REVIEW_CONTENT FROM PRODUCT_REVIEW
+		WHERE REVIEW_NO = #{reviewNo} 
+	</select>
+	<update id="blindReview">
+		UPDATE PRODUCT_REVIEW
+		SET REVIEW_STATUS_CD = #{setStatus}
+		WHERE REVIEW_NO = #{reviewNo} 
+	</update>
+</mapper>

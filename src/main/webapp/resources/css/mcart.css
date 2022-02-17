@@ -1,0 +1,150 @@
+
+.a{
+    position: fixed;
+    right: -500px;
+z-index:999;
+}
+
+
+.open-c{
+    width:50px;
+    height: 100px;
+    background-color: rgb(233, 199, 97);
+    border-radius: 30px 0 0 30px;
+    position: fixed;
+    top:514px;
+    right: 0px;
+    z-index: 40;
+    box-shadow:0 3px 0 gray;
+    cursor: pointer;
+
+
+}
+.c-wrapper{
+    position: relative;
+    
+    width:500px;
+    height: 710px;
+    background-color: rgb(233, 199, 97);
+    z-index: 1;
+    overflow-y: auto;
+
+    border-radius:27px 0 0 0 ;
+    
+}
+.c-s-box{
+    position: relative;
+    top:70px;
+    left:-26px;
+    padding: 40px 30px 70px 30px;
+    margin: auto;
+    width:290px;
+    
+    min-height: 620px;
+    background-color: white;
+    z-index: 1;
+    border-radius:27px 27px 0 0;
+}
+.c-sum-btn{
+    width: 500px;
+    height: 87px;
+    background-color: #564334;
+    z-index: 2;
+    border-radius:0 0 0 30px;
+}
+.c-sum-btn>h2{
+    float: left;
+    color:white;
+
+    line-height: 1.9;
+    margin-left:5px;
+}
+.c-sum-btn>h3{
+    float: left;
+    color:white;
+
+    line-height: 2.7;
+    margin-left:17px;
+}
+.c-ss-box{
+    height:150px;
+    line-height: 1;
+}
+
+
+.c-img{
+    margin-right:10px;
+    width: 94.92px;
+    height: 94.92px;
+   
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+}
+.c-ss-box>*{
+
+    float: left;
+}
+.c-ss-box>h4{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    margin-bottom: 40px;
+}
+.c-sss-box>h4,.c-sss-box>h2{
+    margin:5px 0 0 0;
+    width: 170px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.c-sss-box>p{
+    display:inline-block;
+}
+.c-sss-box{
+    
+    margin-left: 15px;
+}
+.c-sss-box>img{
+width: 15px;
+height: 15px;
+line-height: 0.7;
+padding: 0;
+cursor: pointer;
+
+}
+.minus-btn2{
+    margin: 22px 10px 0 0;
+}
+.minus-btn2:hover,.add-btn2:hover{
+    transform: translate3d(0, 2px, 0);
+    
+}
+.add-btn2{
+
+margin: 22px 10px 0 10px;
+}
+.c-sss-box>button:nth-child(3){
+    margin:20px 10px 0 0;
+}
+.c-sss-box>button:nth-child(5){
+    margin:0 0 0 10px;
+}
+.crt{
+	width:30px; margin:36px 0 0 13px ; display:block;
+	
+}
+.bi2:hover{
+    transform: translate3d(0, 2px, 0);
+}
+.bi:hover{
+    
+    box-shadow: 2px 8px 8px -5px rgba(0, 0, 0, 0.3);
+}
+
+.bi2{
+    position:absolute;
+    right:0;
+    margin-right:95px;
+}

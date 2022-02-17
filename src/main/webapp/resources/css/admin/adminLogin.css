@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+        #admin-wraaper{
+            margin: 0 auto;
+            width: 1200px;
+            height: 1000px;
+        }
+        #adminlogin-box{
+            margin: 0 auto;
+            margin-top: 250px;
+            width: 800px;
+            height: 500px;
+        }
+        .prjName{
+            width: 100%;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-weight: 500px;
+            font-size: 40px;
+        }
+        .admin-title{
+            width: 100%;
+            font-weight: 500px;
+            font-size: 30px;
+            text-align: center;
+        }
+        .login-one-line{
+            margin-top: 50px;
+        }
+        .login-one-line > label{
+            font-size: 25px;
+            display: inline-block;
+            padding-left: 150px;
+            width: 180px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        #adminlogin-box > form > div:nth-child(3) > label{
+            padding-left: 0px;
+            font-size: 20px;
+        }
+        .login-one-line > input{
+            width: 350px;
+            height: 30px;
+        }
+        .login-one-line> button{
+            border: 3px solid #A78A6C;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #A78A6C;
+            color: white;
+            margin-left: 20px;
+        }
+        .loginbtn{
+            text-align: center;
+        }
+        .admin-input{
+            border: 3px solid #A78A6C;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }

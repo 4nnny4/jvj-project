@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+	<resultMap type="Review" id="review_rm">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="orderNo" column="ORDER_NO" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="title" column="REVIEW_TITLE" />
+		<result property="point" column="REVIEW_POINT" />
+		<result property="content" column="REVIEW_CONTENT" />
+		<result property="date" column="REVIEW_DATE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="categoryNo" column="PRODUCT_CD" />
+		<result property="productName" column="PRODUCT_NM" />
+		<result property="writer" column="MEMBER_NICKNAME" />
+	</resultMap>
+
+<!--  주문  -->
+	<select id="selectOrder" resultMap="review_rm">
+  	SELECT PRODUCT_NO,PRODUCT_NM FROM "ORDER"
+        LEFT JOIN
+	PRODUCT USING (PRODUCT_NO)WHERE MEMBER_NO = #{memberNo}
+	</select>
+	<select id="countOrder" resultType="_int">
+		select count(product_no) from "ORDER"
+        WHERE MEMBER_NO = #{memberNo} AND PRODUCT_NO = #{productNo}
+	</select>
+	
+	<select id="countReview" resultType="_int">
+		select count(product_no) from product_review
+        where product_no =  #{productNo} AND member_no = #{memberNo}
+	</select>
+	
+	<!--  이미지 불러오기 ok -->
+	<select id="selectImgPath" resultType="string">
+		SELECT PRODUCT_IMG_PATH ||
+		PRODUCT_IMG_NAME "IMGPATH" FROM PRODUCT_IMG WHERE
+		PRODUCT_NO =
+		#{productNo} AND PRODUCT_IMG_LEVEL = 0
+	</select>
+	
+	<!--  리뷰쓰기 ok -->
+	<insert id="writeReview">
+		INSERT INTO PRODUCT_REVIEW VALUES(
+		SEQ_REVIEW_NO.NEXTVAL,#{productNo},#{memberNo},#{title},#{point},#{content},DEFAULT,DEFAULT
+		)
+	</insert>
+	<!--  ok -->
+	<select id="selectReviewList" resultMap="review_rm">
+		SELECT
+		PRODUCT_NO,
+		MEMBER_NO,
+		REVIEW_TITLE,
+		REVIEW_POINT,
+		REVIEW_CONTENT,
+		REVIEW_DATE,
+		MEMBER_NICKNAME FROM PRODUCT_REVIEW
+		NATURAL JOIN MEMBER
+		WHERE PRODUCT_NO = #{no} AND REVIEW_STATUS_CD = 0
+		<choose>
+		<when test="sr==1">ORDER BY 4</when>
+		<when test="sr==2">ORDER BY 4 DESC</when>
+		<otherwise>
+		ORDER BY REVIEW_DATE
+		</otherwise>
+		</choose>
+
+	</select>
+	<!-- ok -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT_REVIEW
+		WHERE REVIEW_STATUS_CD = 0 
+		AND PRODUCT_NO = #{no}
+	</select>
+	
+	
+</mapper>

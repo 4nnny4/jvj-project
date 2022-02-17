@@ -1,0 +1,361 @@
+@charset "UTF-8";
+
+:root{
+    --text-color : #323232;
+    --accent-color : #564334;
+    --gray-color : #f7f7f7;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Noto Sans Korean';
+    font-weight: 500;
+}
+
+main{
+    width: 70%;
+    margin: auto;
+    display: grid;
+    align-items: center;
+    scroll-behavior: smooth;
+}
+
+/* 제목 */
+.title-section{
+    margin: 80px 0;
+    font-size: 25px;
+    text-align: center;
+}
+
+
+/* 주문 내역 */
+
+.listTitle {
+    margin-left: 102px;
+    margin-bottom: 20px;
+}
+
+
+.product-list{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.product-list > a > img{
+    width: 120px;
+    height: 120px;
+    margin: 35px;
+}
+
+.product-list > div:nth-child(2){
+    width: 60%;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.product-list > div:last-child{
+    width: 20%;
+    text-align: right;
+}
+.product-list a > p{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.product-list > div:nth-child(2) > p {
+    opacity: 50%;
+}
+
+.product-list > div:last-child > p{
+    font-size: 18px;
+    margin-top: 35px;
+    margin-right: auto;
+}
+
+
+/* 주문자 정보 */
+.orderer-info-title{
+    margin-top: 100px;
+}
+
+.orderer{
+    margin-left: 10px; 
+    font-size: 14px;
+    opacity: 50%;
+}
+
+.listTitle, .orderer{
+    display: inline-block;
+}
+
+.orderer-info{
+    display: inline-block;
+    font-size: 20px;
+}
+
+
+input[name="orderer-addr"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid #A78A6C;
+    margin-right: 5px;
+
+    position: relative;
+    top: 4px;
+}
+
+input[name="orderer-addr"]:checked {
+    border: 6px solid #A78A6C;
+}
+
+.orderer-info {
+    margin-top: 40px;
+    margin-left: 75px;
+}
+
+.input-info {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    margin-top: 30px;
+}
+
+.input-info-div{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.input-info p{
+    margin-right: 60px;
+}
+
+.input-info span{
+    display: inline-block;
+    color: #A78A6C;
+    margin-top: 4px;
+}
+
+.receiver-info{
+    border: 2px solid #A78A6C;
+    border-radius: 4px;
+    width: 600px;
+    height: 40px;
+}
+
+.p-div, .input-div{
+    float: left;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.p-div{
+    width: 200px;
+}
+.addr{
+    width: 200px;
+}
+.input-btn{
+    width: 100px;
+    height: 45px;
+    border-radius: 4px;
+    border: 0px;
+    background-color: #A78A6C;
+    font-size: 18px;
+    color: white;
+    transition-duration: 0.1s;
+}
+.input-btn:hover{
+    background-color: #FFFFFF;
+    border: 1px solid #A78A6C;
+    color: #A78A6C;
+    cursor: pointer;
+}
+.receiver-info-select{
+    border: 2px solid #A78A6C;
+    border-radius: 4px;
+    height: 45px;
+}
+
+.phone-input {
+    width: 200px;
+}
+
+#email-select, .email-input{
+    width: 200px;
+}
+
+#email-select, #delivery-message-select{
+    height: 45px;
+}
+
+#delivery-message-select{
+    margin-bottom: 10px;
+}
+
+#delivery-message{
+    display: none;
+}
+
+
+
+/* 체크박스 커스텀 */
+/* Customize the label (the container) */
+.container {
+display: block;
+position: relative;
+padding-left: 40px;
+cursor: pointer;
+font-size: 18px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+height: 40px;
+width: 155px;
+line-height: 38px;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+height: 0;
+width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 25px;
+width: 25px;
+border-radius: 25%;
+border: 1px solid #A78A6C;
+}
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+background-color: #A78A6C;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+left: 9px;
+top: 5px;
+width: 5px;
+height: 10px;
+border: solid white;
+border-width: 0 3px 3px 0;
+-webkit-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+transform: rotate(45deg);
+}
+
+
+/* 정기 배송일 */
+.none-border-btn{
+    cursor: pointer;
+    background-color: #FFFFFF;
+    width: 180px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.delivery-info{
+    margin-left: 20px;
+    font-size: 14px;
+    opacity: 80%;
+}
+
+
+.price-container{
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 25px;
+}
+
+.price-flex{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+.discount{
+    width: 250px;
+}
+
+.discount-price{
+    margin-bottom: 20px;
+}
+
+.discount-select{
+    width: 260px;
+    height: 45px;
+}
+.mileage{
+    display: inline-block;
+    font-size: 15px;
+}
+
+
+.price-hr{
+    height: 2px;
+    background-color: #A78A6C;
+}
+
+.give-flex{
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.payment-select-btn{
+    margin: 0 auto;
+}
+
+#payment-btn{
+    cursor: pointer;
+    background-color: #A78A6C;
+    width: 300px;
+    height: 50px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+
+
+ 
+/* 이메일 영역 감추기 */
+.newInfo{
+    display: none;
+}
+
+/* 원데이 클래스 결제 하단부 공백 */
+.space-div{
+	height:100px;
+}

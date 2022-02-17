@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+
+:root{
+    --text-color : #323232;
+    --accent-color : #564334;
+    --gray-color : #f7f7f7;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Noto Sans Korean';
+    font-weight: 500;
+}
+
+main{
+    width: 70%;
+    margin: auto;
+    display: grid;
+    align-items: center;
+    scroll-behavior: smooth;
+}
+
+/* 제목 */
+.title-section{
+    margin-top: 80px;
+    font-size: 25px;
+    text-align: center;
+}
+
+
+/* 주문 내역 */
+.listTitle {
+    margin-left: 102px;
+    margin-bottom: 20px;
+}
+
+
+.product-list{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.product-list > a > img{
+    width: 120px;
+    height: 120px;
+    margin: 35px;
+}
+
+.product-list > div:nth-child(2){
+    width: 60%;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.product-list > div:last-child{
+    width: 20%;
+    text-align: right;
+}
+.product-list a > p{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.product-list > div:nth-child(2) > p {
+    opacity: 50%;
+}
+
+.product-list > div:last-child > p{
+    font-size: 18px;
+    margin-top: 35px;
+    margin-right: auto;
+}
+
+
+/* 주문자 정보 */
+.orderer-info-title{
+    margin-top: 100px;
+}
+
+.listTitle {
+    display: inline-block;
+}
+
+.orderer-info{
+    display: inline-block;
+    font-size: 20px;
+}
+
+.orderer-info {
+    margin-left: 75px;
+}
+
+.result-info{
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    margin-top: 20px;
+}
+
+.result-info-div{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.result-info p{
+    margin-right: 60px;
+}
+
+.result-info span{
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.p-div, .span-div{
+    float: left;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.p-div{
+    width: 200px;
+}
+
+.span-div{
+	font-weight: bold;
+}
+
+
+
+
+.price-container{
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 25px;
+}
+
+.price-flex{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+
+.price-hr{
+    height: 2px;
+    background-color: #A78A6C;
+}
+
+.give-flex{
+    display: flex;
+    margin: 100px 0;
+}
+
+.payment-result-btn{
+    margin: 0 auto;
+}
+
+.payment-result-btn > button{
+    cursor: pointer;
+    background-color: #A78A6C;
+    width: 300px;
+    height: 50px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 20px;
+    color: #FFFFFF;
+}

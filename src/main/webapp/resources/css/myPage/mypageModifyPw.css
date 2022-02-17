@@ -1,0 +1,227 @@
+article{margin-left: 400px; margin-top: 60px;}
+section{margin-top: 60px}
+/* 타이틀 */
+.titleText{ 
+    text-align: center; 
+    margin-top: 60px; 
+    height: 55px; 
+    color: rgba(86, 67, 52, 1);
+    font-size: 30pt; 
+    font-weight: bold;
+    padding-left: 300px;
+}
+.article{
+    display: inline-block; 
+    width: 100%; 
+    margin-top: 60px;
+    
+}
+
+form{
+    margin-left: 150px;
+}
+
+/* info input */
+.infoForm{
+    display: inline-block; 
+    margin-left: 140px;
+    margin-top: 50px;
+} 
+.memberAdd{ 
+    height: 36px; 
+    border-radius: 10px; 
+    border: 2px solid rgba(167, 138, 108, 1); 
+    font-size: 13px; 
+    color: rgba(109, 109, 109, 1);
+    
+}
+
+/* infor input */
+.inputLabel{
+    display:inline-block; 
+    width: 180px; 
+    line-height: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.inputStyle{
+    height: 36px; 
+    width: 200px;
+    border-radius: 10px; 
+    border: 2px solid rgba(167, 138, 108, 1); 
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0;
+    font-weight: bold;
+    font-size: 15px;
+}
+.phoneInput{
+    margin-bottom: 20px;
+    width: 200px;
+    font-weight: bold;
+}
+.phoneNum{
+    height: 36px;
+    width: 80px;
+    border-radius: 10px; 
+    border: 2px solid rgba(167, 138, 108, 1); 
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0;
+
+}
+.phoneOpt{
+    height: 39px;
+}
+.phoneNum>option{
+    text-align: center;
+}
+
+.userInfo>p{
+	display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.userInfo>p:first-child{
+	width: 185px;
+}
+
+
+
+
+/* 주소 input */
+.addIb{
+    margin-left: 186px;
+    width: 380px; 
+    display: block; 
+    padding: 0;
+    padding-left: 10px;
+}
+#addInput>p{
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+    margin-right: 43px;
+    padding-bottom: 9px;
+    margin: 0;
+    margin-top: 10px;
+}
+.addInput1{
+    width: 140px; 
+    margin-bottom: 15px; 
+    display: block; 
+    float: left; 
+    margin-right: 10px;
+    margin-left: 146px;
+    padding: 0; 
+    padding-left: 10px;
+}
+.addInput2{
+    margin-bottom: 15px;
+    float: left;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+}
+
+
+
+.addBtn{ 
+    width: 100px; 
+    height: 40px; 
+    background-color: rgba(167, 138, 108, 1); 
+    color: white; 
+    border-radius: 20px;
+}
+
+.subBtn{
+    margin-top: 100px; 
+    margin-bottom: 400px;
+}
+.subBtn>button{ 
+    width: 390px; 
+    height: 60px;  
+    border-radius: 10px; 
+    font-size: 15pt; 
+    font-weight: bold;
+}
+#infoUpdate{
+    color: white; 
+    background-color: rgba(167, 138, 108, 1); 
+    border: rgba(167, 138, 108, 1);
+    margin-bottom: 10px;
+}
+
+label[for="cbInput"]{ 
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: rgba(167, 138, 108, 1) solid 1px;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+} 
+
+input[id="cbInput"]:checked + label {
+	background-color: rgba(167, 138, 108, 1);
+}
+input[id="cbInput"]{
+    display: none;
+    
+}
+
+.chkInput{
+    margin-left: 186px;
+}
+.chkInput>div{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    margin-left: 35px;
+}
+
+/* info nav */
+#hr{
+    width: 280px; 
+    height: 5px; 
+    background-color: rgba(167, 138, 108, 1); 
+    margin-bottom: 20px;
+    
+}
+
+.divNav{
+    width: 24%; 
+    display: inline-block; 
+    font-size: 23px;
+    margin-right: 5px;
+    position: absolute;
+    
+}
+
+.divNav>ul{
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+    
+}
+
+#p-form{
+	float: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.divNav>ul>li:first-child{
+    font-weight: bold; 
+    font-size: 25px;
+} 
+
+
+.divNav .subText{ margin-top: 20px;}
+.divNav .topText{ margin-bottom: 10px;}
+.divNav .mTopText{ margin-top: 55px;}
